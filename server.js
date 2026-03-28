@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 const path       = require('path');
 
 const app = express();
-const db  = new Database('orders.db');
+const DB_PATH = process.env.NODE_ENV === 'production' ? '/app/data/orders.db' : 'orders.db';
+const db = new Database(DB_PATH);
 
 // ─── Serve frontend (fix "Cannot GET /") ──────────────────
 app.use(express.static(path.join(__dirname, 'public')));
