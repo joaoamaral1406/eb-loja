@@ -38,11 +38,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:700;height:56px;display:flex;ali
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:56px 40px 0}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,var(--bg0) 0%,var(--gn) 50%,var(--bg0) 100%)}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(61,107,30,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(61,107,30,.06) 1px,transparent 1px);background-size:60px 60px}
-.hero-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,150,42,.4),transparent);animation:scan 10s linear infinite;top:56px}
+/* SLIDESHOW */
+.hero-slideshow{position:absolute;inset:0;z-index:0}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.5s ease}
+.hero-slide.active{opacity:1}
+.hero-bg{position:absolute;inset:0;z-index:1;background:linear-gradient(160deg,rgba(8,10,8,.88) 0%,rgba(20,35,12,.65) 50%,rgba(8,10,8,.88) 100%)}
+.hero-grid{position:absolute;inset:0;z-index:2;background-image:linear-gradient(rgba(61,107,30,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(61,107,30,.06) 1px,transparent 1px);background-size:60px 60px}
+.hero-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,150,42,.4),transparent);animation:scan 10s linear infinite;top:56px;z-index:3}
 @keyframes scan{from{top:56px}to{top:100%}}
-.hero-content{position:relative;z-index:2;max-width:620px}
+.hero-content{position:relative;z-index:4;max-width:620px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--go);border:1px solid rgba(201,150,42,.3);padding:5px 13px;margin-bottom:22px;animation:fu .6s ease both}
 .hero-badge::before{content:'';width:6px;height:6px;background:var(--go);border-radius:50%;animation:blink 1.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
@@ -56,7 +60,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:700;height:56px;display:flex;ali
 .btn-gold:hover{background:var(--go2);transform:translateY(-2px)}
 .btn-ghost{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.84rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);background:transparent;border:1px solid rgba(201,150,42,.4);padding:13px 30px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s}
 .btn-ghost:hover{border-color:var(--go);color:var(--go2)}
-.hero-stats{position:absolute;bottom:40px;right:40px;display:flex;gap:36px;animation:fu .6s .5s ease both}
+.hero-stats{position:absolute;bottom:40px;right:40px;display:flex;gap:36px;animation:fu .6s .5s ease both;z-index:4}
 .hn{font-family:'Bebas Neue',cursive;font-size:2.1rem;color:var(--go);letter-spacing:2px;line-height:1}
 .hl{font-family:'Rajdhani',sans-serif;font-size:.64rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu)}
 
@@ -111,29 +115,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:700;height:56px;display:flex;ali
 .overlay.open .modal{transform:translateY(0)}
 .modal-x{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--mu);font-size:1.3rem;cursor:pointer;z-index:10;line-height:1}
 .modal-x:hover{color:var(--cr)}
-
-/* step bar */
 .sbar{display:flex;height:3px;background:rgba(61,107,30,.15)}
 .seg{flex:1;transition:background .3s}
 .seg.done{background:var(--go)}
 .seg.on{background:var(--ac2)}
-
-/* panels */
 .panel{display:none;padding:28px 28px 24px}
 .panel.on{display:block}
 .p-eye{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--ac2);margin-bottom:4px}
 .p-title{font-family:'Bebas Neue',cursive;font-size:1.8rem;letter-spacing:2px;color:var(--cr2);margin-bottom:4px}
 .p-sub{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:1.15rem;color:var(--go);margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid rgba(61,107,30,.2)}
-
-/* terms */
 .terms-box{background:var(--bg3);border:1px solid rgba(61,107,30,.2);padding:14px;height:130px;overflow-y:auto;font-size:.76rem;color:var(--mu);line-height:1.7;margin-bottom:14px}
 .terms-box::-webkit-scrollbar{width:3px}
 .terms-box::-webkit-scrollbar-thumb{background:var(--ac)}
 .chk-row{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px;cursor:pointer}
 .chk-row input{width:15px;height:15px;min-width:15px;margin-top:2px;accent-color:var(--go);cursor:pointer}
 .chk-label{font-size:.8rem;color:var(--mu2);line-height:1.5;cursor:pointer}
-
-/* roblox */
 .rid-wrap{position:relative;margin-bottom:14px}
 .rid-input{width:100%;background:var(--bg3);border:1px solid rgba(61,107,30,.3);color:var(--cr);font-family:'Barlow',sans-serif;font-size:1rem;padding:11px 46px 11px 13px;outline:none;transition:border-color .2s;-moz-appearance:textfield}
 .rid-input::-webkit-outer-spin-button,.rid-input::-webkit-inner-spin-button{-webkit-appearance:none}
@@ -151,8 +147,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:700;height:56px;display:flex;ali
 .rox-link{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--ac2);text-decoration:none;border-bottom:1px solid rgba(94,160,48,.35);padding-bottom:1px}
 .rox-link:hover{color:var(--ac3)}
 .rox-note{font-size:.75rem;color:var(--mu);margin-top:7px}
-
-/* form */
 .fg{margin-bottom:14px}
 .fl{display:block;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-bottom:5px}
 .fi{width:100%;background:var(--bg3);border:1px solid rgba(61,107,30,.3);color:var(--cr);font-family:'Barlow',sans-serif;font-size:.9rem;padding:10px 13px;outline:none;transition:border-color .2s}
@@ -171,33 +165,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:700;height:56px;display:flex;ali
 .prow{display:flex;justify-content:space-between;font-size:.8rem;color:var(--mu);margin-bottom:5px}
 .prow.tot{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.05rem;color:var(--go);margin-top:7px;padding-top:7px;border-top:1px solid rgba(61,107,30,.2);margin-bottom:0}
 .prow.dis{color:#6ecf6e}
-
-/* buttons */
 .pbtn{width:100%;padding:13px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--bg0);background:var(--go);border:none;cursor:pointer;transition:background .2s;margin-top:4px}
 .pbtn:hover{background:var(--go2)}
 .pbtn:disabled{opacity:.45;cursor:not-allowed}
 .bbtn{width:100%;padding:9px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);background:transparent;border:1px solid rgba(61,107,30,.2);cursor:pointer;transition:all .2s;margin-top:7px}
 .bbtn:hover{color:var(--cr);border-color:rgba(61,107,30,.4)}
 .mnote{font-size:.7rem;color:var(--mu);text-align:center;margin-top:11px;line-height:1.6}
-
-/* spinner */
 .sp{display:inline-block;width:15px;height:15px;border:2px solid rgba(8,10,8,.3);border-top-color:var(--bg0);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* toast */
 .toast{position:fixed;bottom:22px;right:22px;background:var(--bg2);border:1px solid rgba(61,107,30,.3);border-left:3px solid var(--ac);padding:12px 16px;font-family:'Rajdhani',sans-serif;font-size:.88rem;color:var(--cr);z-index:9999;transform:translateX(130%);transition:transform .3s;max-width:280px}
 .toast.show{transform:translateX(0)}
 .toast.ok{border-left-color:#4caf50}
 .toast.err{border-left-color:var(--re2)}
-
-/* footer */
 footer{background:var(--bg1);border-top:1px solid rgba(61,107,30,.15);padding:34px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .fbrand{font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:4px;color:var(--go)}
 .flinks{display:flex;gap:20px;list-style:none}
 .flinks a{font-family:'Rajdhani',sans-serif;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);text-decoration:none}
 .flinks a:hover{color:var(--go)}
 .fcopy{font-size:.7rem;color:var(--mu);opacity:.5}
-
 @keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:768px){nav{padding:0 14px}.nav-center{display:none}.hero{padding:56px 16px 0}.hero-stats{display:none}.cat-nav{padding:0 14px}.section{padding:48px 16px}.grid{grid-template-columns:1fr 1fr}footer{flex-direction:column;padding:22px 16px}}
 @media(max-width:480px){.grid{grid-template-columns:1fr}.panel{padding:22px 18px 20px}}
@@ -226,6 +211,13 @@ footer{background:var(--bg1);border-top:1px solid rgba(61,107,30,.15);padding:34
 </nav>
 
 <div class="hero">
+  <!-- SLIDESHOW DE FUNDO -->
+  <div class="hero-slideshow">
+    <div class="hero-slide active" style="background-image:url('https://i.imgur.com/oCIxF7u.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://i.imgur.com/RrkuKoy.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://i.imgur.com/DIlv3nH.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://i.imgur.com/suUb2y9.jpg')"></div>
+  </div>
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-scan"></div>
@@ -265,7 +257,7 @@ footer{background:var(--bg1);border-top:1px solid rgba(61,107,30,.15);padding:34
 <div class="section" id="s-itens"><div class="sec-eye">// 03 · Exclusivos</div><div class="sec-title">ITENS <span>ÚNICOS</span></div><div class="sec-bar"></div><div class="grid" id="g-itens"></div></div>
 <div class="section" id="s-divisoes"><div class="sec-eye">// 04 · Sub-grupos EB</div><div class="sec-title">DIVISÕES <span>ESPECIAIS</span></div><div class="sec-bar"></div><div class="grid" id="g-divisoes"></div></div>
 <div class="section" id="s-especiais"><div class="sec-eye">// 05 · Postos de Elite</div><div class="sec-title">POSTOS <span>ESPECIAIS</span></div><div class="sec-bar"></div><div class="grid" id="g-especiais"></div></div>
-<div class="section" id="s-bundles"><div class="sec-eye">// 05 · Economize mais</div><div class="sec-title">PACOTES COM <span>DESCONTO</span></div><div class="sec-bar"></div><div class="grid" id="g-bundles"></div></div>
+<div class="section" id="s-bundles"><div class="sec-eye">// 06 · Economize mais</div><div class="sec-title">PACOTES COM <span>DESCONTO</span></div><div class="sec-bar"></div><div class="grid" id="g-bundles"></div></div>
 
 <footer>
   <div class="fbrand">EB · Exército Brasileiro</div>
@@ -277,7 +269,6 @@ footer{background:var(--bg1);border-top:1px solid rgba(61,107,30,.15);padding:34
   <div class="fcopy">Não afiliado à Roblox Corporation © 2025</div>
 </footer>
 
-<!-- MODAL 3 STEPS -->
 <div class="overlay" id="ov">
   <div class="modal">
     <button class="modal-x" onclick="closeM()">✕</button>
@@ -286,8 +277,6 @@ footer{background:var(--bg1);border-top:1px solid rgba(61,107,30,.15);padding:34
       <div class="seg" id="sg1"></div>
       <div class="seg" id="sg2"></div>
     </div>
-
-    <!-- STEP 0: TERMOS -->
     <div class="panel on" id="p0">
       <div class="p-eye">Passo 1 de 3 · Termos de Uso</div>
       <div class="p-title" id="m-name">—</div>
@@ -306,8 +295,6 @@ footer{background:var(--bg1);border-top:1px solid rgba(61,107,30,.15);padding:34
       <label class="chk-row"><input type="checkbox" id="c2"><span class="chk-label">Confirmo que tenho <strong>13 anos ou mais</strong> (ou autorização dos responsáveis).</span></label>
       <button class="pbtn" onclick="goStep(1)">CONTINUAR →</button>
     </div>
-
-    <!-- STEP 1: ROBLOX ID -->
     <div class="panel" id="p1">
       <div class="p-eye">Passo 2 de 3 · Verificação Roblox</div>
       <div class="p-title">SEU PERFIL</div>
@@ -329,8 +316,6 @@ footer{background:var(--bg1);border-top:1px solid rgba(61,107,30,.15);padding:34
       <button class="pbtn" id="btn1" onclick="goStep(2)" disabled>CONFIRMAR E CONTINUAR →</button>
       <button class="bbtn" onclick="goStep(0)">← Voltar</button>
     </div>
-
-    <!-- STEP 2: EMAIL + CUPOM + PAGAR -->
     <div class="panel" id="p2">
       <div class="p-eye">Passo 3 de 3 · Pagamento</div>
       <div class="p-title">FINALIZAR</div>
@@ -367,7 +352,6 @@ const stripe = Stripe(STRIPE_PK);
 
 let items=[], cur=null, step=0, rox=null, coup=null, total=0;
 
-// Load items
 async function loadItems(){
   try{
     const r=await fetch('/api/items');
@@ -418,7 +402,6 @@ function cat(c,btn){
   if(btn)btn.classList.add('on');
 }
 
-// Open modal
 function openBuy(id){
   cur=items.find(i=>i.id===id);if(!cur)return;
   total=cur.price;coup=null;rox=null;
@@ -455,7 +438,6 @@ function goStep(n){
   }
 }
 
-// Roblox
 function clrRox(){rox=null;document.getElementById('rox-card').classList.remove('on');document.getElementById('rid-err').classList.remove('on');document.getElementById('btn1').disabled=true;}
 async function searchRox(){
   const id=document.getElementById('rid').value.trim();
@@ -482,7 +464,6 @@ async function searchRox(){
 document.getElementById('rid').addEventListener('keydown',e=>{if(e.key==='Enter')searchRox()});
 function errRox(m){const e=document.getElementById('rid-err');e.textContent='❌ '+m;e.classList.add('on');document.getElementById('rox-card').classList.remove('on');document.getElementById('btn1').disabled=true;}
 
-// Coupon
 async function applyCup(){
   const code=document.getElementById('cup').value.trim().toUpperCase();
   if(!code)return;
@@ -510,7 +491,6 @@ function updSum(){
   else dr.style.display='none';
 }
 
-// Payment
 async function doPayment(){
   const email=document.getElementById('em').value.trim();
   if(!email||!email.includes('@')){toast('Digite um e-mail válido.','err');return;}
@@ -525,13 +505,23 @@ async function doPayment(){
   }catch(e){toast('Erro: '+e.message,'err');btn.disabled=false;btn.innerHTML='🔒 PAGAR COM STRIPE';}
 }
 
-// URL return
 const P=new URLSearchParams(location.search);
 if(P.get('success')==='true'){setTimeout(()=>toast('✅ Pagamento confirmado! Entrega em andamento.','ok'),600);history.replaceState({},'',location.pathname);}
 if(P.get('canceled')==='true'){setTimeout(()=>toast('Pagamento cancelado.','err'),400);history.replaceState({},'',location.pathname);}
 
 function animN(el,t){let c=0;const s=Math.max(1,Math.ceil(t/50));const x=setInterval(()=>{c=Math.min(c+s,t);el.textContent=c.toLocaleString('pt-BR');if(c>=t)clearInterval(x);},30);}
 function toast(m,t=''){const e=document.getElementById('toast');e.textContent=m;e.className=`toast ${t} show`;clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),4500);}
+
+// Slideshow automático — troca a cada 5 segundos
+(function(){
+  const slides=document.querySelectorAll('.hero-slide');
+  let cur=0;
+  setInterval(()=>{
+    slides[cur].classList.remove('active');
+    cur=(cur+1)%slides.length;
+    slides[cur].classList.add('active');
+  },5000);
+})();
 
 loadItems();
 </script>
