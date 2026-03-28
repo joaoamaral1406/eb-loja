@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EB · Exército Brasileiro — Loja Oficial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root{
+  --bg0:#080a08;--bg1:#0d100c;--bg2:#111410;--bg3:#161a13;--bg4:#1c2118;
+  --gn:#1e2d14;--gn2:#253618;
+  --ac:#3d6b1e;--ac2:#4d8526;--ac3:#5ea030;
+  --go:#c9962a;--go2:#e5b040;--go3:#f5c84a;
+  --re:#8b1f1f;--re2:#b52828;
+  --cr:#e8e4d8;--cr2:#f4f1e8;--mu:#6b7558;--mu2:#8a9470;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg0);color:var(--cr);font-family:'Barlow',sans-serif;font-weight:300;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9900}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg1)}::-webkit-scrollbar-thumb{background:var(--ac)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:700;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(8,10,8,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(61,107,30,.25)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-logo{width:30px;height:30px;background:linear-gradient(135deg,var(--ac),var(--ac2));clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);display:flex;align-items:center;justify-content:center;font-size:.75rem}
+.brand-text{font-family:'Bebas Neue',cursive;font-size:1.2rem;letter-spacing:4px;color:var(--go)}
+.nav-center{display:flex;gap:2px}
+.nav-tab{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);background:none;border:none;cursor:pointer;padding:6px 14px;transition:color .2s,background .2s}
+.nav-tab:hover,.nav-tab.on{color:var(--go);background:rgba(201,150,42,.08)}
+.nav-right{display:flex;gap:8px}
+.nav-discord{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.73rem;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:#5865f2;padding:7px 14px;text-decoration:none;transition:background .2s}
+.nav-discord:hover{background:#4752c4}
+.nav-play{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.73rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--bg0);background:var(--ac2);padding:7px 14px;text-decoration:none;transition:background .2s}
+.nav-play:hover{background:var(--ac3)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:56px 40px 0}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,var(--bg0) 0%,var(--gn) 50%,var(--bg0) 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(61,107,30,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(61,107,30,.06) 1px,transparent 1px);background-size:60px 60px}
+.hero-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,150,42,.4),transparent);animation:scan 10s linear infinite;top:56px}
+@keyframes scan{from{top:56px}to{top:100%}}
+.hero-content{position:relative;z-index:2;max-width:620px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--go);border:1px solid rgba(201,150,42,.3);padding:5px 13px;margin-bottom:22px;animation:fu .6s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--go);border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.hero h1{font-family:'Bebas Neue',cursive;font-size:clamp(3.5rem,8vw,7rem);line-height:.88;letter-spacing:2px;animation:fu .6s .1s ease both}
+.hero h1 .l1{color:var(--cr2);display:block}
+.hero h1 .l2{color:var(--go);display:block}
+.hero h1 .l3{color:var(--ac2);font-size:55%;letter-spacing:6px;display:block}
+.hero-sub{font-size:.93rem;line-height:1.75;color:var(--mu2);max-width:440px;margin:22px 0 36px;animation:fu .6s .2s ease both}
+.hero-btns{display:flex;gap:12px;animation:fu .6s .3s ease both}
+.btn-gold{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.84rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg0);background:var(--go);padding:13px 30px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-gold:hover{background:var(--go2);transform:translateY(-2px)}
+.btn-ghost{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.84rem;letter-spacing:2px;text-transform:uppercase;color:var(--go);background:transparent;border:1px solid rgba(201,150,42,.4);padding:13px 30px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-ghost:hover{border-color:var(--go);color:var(--go2)}
+.hero-stats{position:absolute;bottom:40px;right:40px;display:flex;gap:36px;animation:fu .6s .5s ease both}
+.hn{font-family:'Bebas Neue',cursive;font-size:2.1rem;color:var(--go);letter-spacing:2px;line-height:1}
+.hl{font-family:'Rajdhani',sans-serif;font-size:.64rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu)}
+
+/* CAT NAV */
+.cat-nav{background:var(--bg1);border-bottom:1px solid rgba(61,107,30,.2);padding:0 40px;display:flex;overflow-x:auto;position:sticky;top:56px;z-index:500}
+.cat-btn{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.76rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;padding:13px 18px;transition:all .2s;white-space:nowrap}
+.cat-btn:hover{color:var(--cr)}
+.cat-btn.on{color:var(--go);border-bottom-color:var(--go)}
+
+/* SECTIONS */
+.section{padding:64px 40px;max-width:1320px;margin:0 auto;display:none}
+.section.vis{display:block}
+.sec-eye{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--ac2);margin-bottom:7px}
+.sec-title{font-family:'Bebas Neue',cursive;font-size:clamp(2rem,4vw,3rem);letter-spacing:2px;color:var(--cr2);margin-bottom:14px}
+.sec-title span{color:var(--go)}
+.sec-bar{width:40px;height:2px;background:var(--ac);margin-bottom:40px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2px;background:rgba(61,107,30,.09);border:1px solid rgba(61,107,30,.09)}
+.card{background:var(--bg2);padding:24px 22px;position:relative;overflow:hidden;cursor:pointer;transition:background .22s,transform .22s}
+.card::after{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--go);transition:width .28s}
+.card:hover{background:var(--bg3);transform:translateY(-3px)}
+.card:hover::after{width:100%}
+.card.feat{background:linear-gradient(135deg,var(--bg2),rgba(201,150,42,.05));border:1px solid rgba(201,150,42,.14)}
+.card.feat::after{background:var(--go)}
+.card-badge{position:absolute;top:11px;right:11px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.56rem;letter-spacing:2px;text-transform:uppercase;padding:3px 7px}
+.b-hot{background:var(--re2);color:#fff}.b-new{background:var(--ac);color:#fff}.b-pop{background:var(--go);color:var(--bg0)}
+.card-icon{font-size:1.75rem;margin-bottom:13px;display:block}
+.cat-tag{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;margin-bottom:11px;display:inline-block}
+.t-pat{background:rgba(61,107,30,.28);color:var(--ac2);border:1px solid rgba(61,107,30,.4)}
+.t-gp{background:rgba(201,150,42,.18);color:var(--go);border:1px solid rgba(201,150,42,.3)}
+.t-it{background:rgba(94,160,48,.18);color:#7cc84a;border:1px solid rgba(94,160,48,.3)}
+.t-div{background:rgba(70,100,180,.18);color:#7aabde;border:1px solid rgba(70,100,180,.3)}
+.t-esp{background:rgba(140,90,200,.22);color:#c090f0;border:1px solid rgba(140,90,200,.35)}
+.t-bun{background:rgba(139,31,31,.18);color:#e07070;border:1px solid rgba(139,31,31,.3)}
+.card-name{font-family:'Bebas Neue',cursive;font-size:1.5rem;letter-spacing:1.5px;color:var(--cr2);margin-bottom:5px}
+.card-desc{font-size:.78rem;color:var(--mu);line-height:1.55;margin-bottom:16px}
+.price-row{display:flex;align-items:flex-end;gap:8px;margin-bottom:14px}
+.price{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.65rem;color:var(--go);letter-spacing:1px;line-height:1}
+.old-price{font-family:'Rajdhani',sans-serif;font-size:.82rem;color:var(--mu);text-decoration:line-through;padding-bottom:2px}
+.buy-btn{width:100%;padding:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg0);background:var(--go);border:none;cursor:pointer;transition:background .2s}
+.buy-btn:hover{background:var(--go2)}
+.perks{list-style:none;margin-bottom:14px}
+.perks li{font-size:.76rem;color:var(--mu);padding:4px 0 4px 13px;border-bottom:1px solid rgba(61,107,30,.1);position:relative}
+.perks li::before{content:'▸';position:absolute;left:0;color:var(--ac2)}
+.savings{display:inline-block;font-family:'Rajdhani',sans-serif;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;background:rgba(76,175,80,.13);color:#6ecf6e;border:1px solid rgba(76,175,80,.24);padding:3px 10px;margin-bottom:12px}
+
+/* OVERLAY */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px)}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid rgba(61,107,30,.3);width:100%;max-width:490px;position:relative;transform:translateY(20px);transition:transform .3s;max-height:92vh;overflow-y:auto;overflow-x:hidden}
+.overlay.open .modal{transform:translateY(0)}
+.modal-x{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--mu);font-size:1.3rem;cursor:pointer;z-index:10;line-height:1}
+.modal-x:hover{color:var(--cr)}
+
+/* step bar */
+.sbar{display:flex;height:3px;background:rgba(61,107,30,.15)}
+.seg{flex:1;transition:background .3s}
+.seg.done{background:var(--go)}
+.seg.on{background:var(--ac2)}
+
+/* panels */
+.panel{display:none;padding:28px 28px 24px}
+.panel.on{display:block}
+.p-eye{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--ac2);margin-bottom:4px}
+.p-title{font-family:'Bebas Neue',cursive;font-size:1.8rem;letter-spacing:2px;color:var(--cr2);margin-bottom:4px}
+.p-sub{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:1.15rem;color:var(--go);margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid rgba(61,107,30,.2)}
+
+/* terms */
+.terms-box{background:var(--bg3);border:1px solid rgba(61,107,30,.2);padding:14px;height:130px;overflow-y:auto;font-size:.76rem;color:var(--mu);line-height:1.7;margin-bottom:14px}
+.terms-box::-webkit-scrollbar{width:3px}
+.terms-box::-webkit-scrollbar-thumb{background:var(--ac)}
+.chk-row{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px;cursor:pointer}
+.chk-row input{width:15px;height:15px;min-width:15px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.chk-label{font-size:.8rem;color:var(--mu2);line-height:1.5;cursor:pointer}
+
+/* roblox */
+.rid-wrap{position:relative;margin-bottom:14px}
+.rid-input{width:100%;background:var(--bg3);border:1px solid rgba(61,107,30,.3);color:var(--cr);font-family:'Barlow',sans-serif;font-size:1rem;padding:11px 46px 11px 13px;outline:none;transition:border-color .2s;-moz-appearance:textfield}
+.rid-input::-webkit-outer-spin-button,.rid-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.rid-input:focus{border-color:var(--go)}
+.rid-input::placeholder{color:var(--mu)}
+.rid-btn{position:absolute;right:0;top:0;bottom:0;width:42px;background:var(--ac);border:none;color:#fff;cursor:pointer;font-size:.95rem;transition:background .2s}
+.rid-btn:hover{background:var(--ac2)}
+.rid-err{background:rgba(139,31,31,.2);border:1px solid rgba(181,40,40,.3);color:#e07070;padding:9px 13px;font-size:.8rem;display:none;margin-bottom:12px}
+.rid-err.on{display:block}
+.rox-card{background:var(--bg3);border:1px solid rgba(201,150,42,.22);padding:14px;display:none;margin-bottom:14px;gap:13px;align-items:center}
+.rox-card.on{display:flex}
+.rox-img{width:58px;height:58px;border-radius:3px;object-fit:cover;border:2px solid rgba(201,150,42,.3)}
+.rox-name{font-family:'Bebas Neue',cursive;font-size:1.25rem;letter-spacing:1.5px;color:var(--cr2);margin-bottom:2px}
+.rox-disp{font-size:.77rem;color:var(--mu);margin-bottom:5px}
+.rox-link{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--ac2);text-decoration:none;border-bottom:1px solid rgba(94,160,48,.35);padding-bottom:1px}
+.rox-link:hover{color:var(--ac3)}
+.rox-note{font-size:.75rem;color:var(--mu);margin-top:7px}
+
+/* form */
+.fg{margin-bottom:14px}
+.fl{display:block;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-bottom:5px}
+.fi{width:100%;background:var(--bg3);border:1px solid rgba(61,107,30,.3);color:var(--cr);font-family:'Barlow',sans-serif;font-size:.9rem;padding:10px 13px;outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(--go)}
+.fi::placeholder{color:var(--mu)}
+.cup-row{display:flex}
+.cup-in{flex:1;background:var(--bg3);border:1px solid rgba(61,107,30,.3);border-right:none;color:var(--cr);font-family:'Barlow',sans-serif;font-size:.9rem;padding:10px 13px;outline:none;text-transform:uppercase;transition:border-color .2s}
+.cup-in:focus{border-color:var(--go)}
+.cup-in::placeholder{color:var(--mu);text-transform:none}
+.cup-btn{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;background:var(--bg4);color:var(--cr);border:1px solid rgba(61,107,30,.3);padding:0 16px;cursor:pointer;transition:background .2s}
+.cup-btn:hover{background:var(--gn2)}
+.cup-res{font-size:.78rem;padding:8px 12px;margin-top:7px;display:none}
+.cup-res.ok{display:block;background:rgba(76,175,80,.11);border:1px solid rgba(76,175,80,.24);color:#6ecf6e}
+.cup-res.err{display:block;background:rgba(139,31,31,.18);border:1px solid rgba(181,40,40,.3);color:#e07070}
+.psum{background:var(--bg3);padding:12px 14px;margin-bottom:16px;border:1px solid rgba(61,107,30,.14)}
+.prow{display:flex;justify-content:space-between;font-size:.8rem;color:var(--mu);margin-bottom:5px}
+.prow.tot{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.05rem;color:var(--go);margin-top:7px;padding-top:7px;border-top:1px solid rgba(61,107,30,.2);margin-bottom:0}
+.prow.dis{color:#6ecf6e}
+
+/* buttons */
+.pbtn{width:100%;padding:13px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--bg0);background:var(--go);border:none;cursor:pointer;transition:background .2s;margin-top:4px}
+.pbtn:hover{background:var(--go2)}
+.pbtn:disabled{opacity:.45;cursor:not-allowed}
+.bbtn{width:100%;padding:9px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);background:transparent;border:1px solid rgba(61,107,30,.2);cursor:pointer;transition:all .2s;margin-top:7px}
+.bbtn:hover{color:var(--cr);border-color:rgba(61,107,30,.4)}
+.mnote{font-size:.7rem;color:var(--mu);text-align:center;margin-top:11px;line-height:1.6}
+
+/* spinner */
+.sp{display:inline-block;width:15px;height:15px;border:2px solid rgba(8,10,8,.3);border-top-color:var(--bg0);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* toast */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--bg2);border:1px solid rgba(61,107,30,.3);border-left:3px solid var(--ac);padding:12px 16px;font-family:'Rajdhani',sans-serif;font-size:.88rem;color:var(--cr);z-index:9999;transform:translateX(130%);transition:transform .3s;max-width:280px}
+.toast.show{transform:translateX(0)}
+.toast.ok{border-left-color:#4caf50}
+.toast.err{border-left-color:var(--re2)}
+
+/* footer */
+footer{background:var(--bg1);border-top:1px solid rgba(61,107,30,.15);padding:34px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.fbrand{font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:4px;color:var(--go)}
+.flinks{display:flex;gap:20px;list-style:none}
+.flinks a{font-family:'Rajdhani',sans-serif;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);text-decoration:none}
+.flinks a:hover{color:var(--go)}
+.fcopy{font-size:.7rem;color:var(--mu);opacity:.5}
+
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){nav{padding:0 14px}.nav-center{display:none}.hero{padding:56px 16px 0}.hero-stats{display:none}.cat-nav{padding:0 14px}.section{padding:48px 16px}.grid{grid-template-columns:1fr 1fr}footer{flex-direction:column;padding:22px 16px}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.panel{padding:22px 18px 20px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="#">
+    <div class="brand-logo">★</div>
+    <span class="brand-text">EB · LOJA</span>
+  </a>
+  <div class="nav-center">
+    <button class="nav-tab on" onclick="cat('all',this)">Todos</button>
+    <button class="nav-tab" onclick="cat('patentes',this)">Patentes</button>
+    <button class="nav-tab" onclick="cat('gamepasses',this)">Gamepasses</button>
+    <button class="nav-tab" onclick="cat('itens',this)">Itens Únicos</button>
+    <button class="nav-tab" onclick="cat('divisoes',this)">Divisões</button>
+    <button class="nav-tab" onclick="cat('especiais',this)">⚡ Especiais</button>
+    <button class="nav-tab" onclick="cat('bundles',this)">Pacotes</button>
+  </div>
+  <div class="nav-right">
+    <a href="https://discord.gg/SEU-DISCORD" target="_blank" class="nav-discord">Discord</a>
+    <a href="https://www.roblox.com/games/14511049/EB-Ex-rcito-Brasileiro" target="_blank" class="nav-play">▶ Jogar</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🎖 Loja Oficial · Roblox</div>
+    <h1>
+      <span class="l1">EXÉRCITO</span>
+      <span class="l2">BRASILEIRO</span>
+      <span class="l3">Loja Oficial do Servidor</span>
+    </h1>
+    <p class="hero-sub">Compre patentes, gamepasses e itens exclusivos com dinheiro real. Entrega automática após confirmação — sem espera.</p>
+    <div class="hero-btns">
+      <a href="#loja" class="btn-gold">Ver Produtos</a>
+      <a href="https://www.roblox.com/games/14511049/EB-Ex-rcito-Brasileiro" target="_blank" class="btn-ghost">Jogar Agora</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div><div class="hn" id="stat-n">—</div><div class="hl">Vendas</div></div>
+    <div><div class="hn">&lt;1min</div><div class="hl">Entrega</div></div>
+    <div><div class="hn">100%</div><div class="hl">Automático</div></div>
+  </div>
+</div>
+
+<div class="cat-nav" id="loja">
+  <button class="cat-btn on" onclick="cat('all',this)">⊞ Todos</button>
+  <button class="cat-btn" onclick="cat('patentes',this)">🎖 Patentes</button>
+  <button class="cat-btn" onclick="cat('gamepasses',this)">⚡ Gamepasses</button>
+  <button class="cat-btn" onclick="cat('itens',this)">💎 Itens Únicos</button>
+  <button class="cat-btn" onclick="cat('divisoes',this)">🪖 Divisões</button>
+  <button class="cat-btn" onclick="cat('especiais',this)">💎 Especiais</button>
+  <button class="cat-btn" onclick="cat('bundles',this)">📦 Pacotes</button>
+</div>
+
+<div class="section vis" id="s-all"><div class="sec-eye">// Catálogo completo</div><div class="sec-title">TODOS OS <span>PRODUTOS</span></div><div class="sec-bar"></div><div class="grid" id="g-all"></div></div>
+<div class="section" id="s-patentes"><div class="sec-eye">// 01 · Hierarquia Militar</div><div class="sec-title">PATENTES <span>MILITARES</span></div><div class="sec-bar"></div><div class="grid" id="g-patentes"></div></div>
+<div class="section" id="s-gamepasses"><div class="sec-eye">// 02 · Benefícios Permanentes</div><div class="sec-title">GAME<span>PASSES</span></div><div class="sec-bar"></div><div class="grid" id="g-gamepasses"></div></div>
+<div class="section" id="s-itens"><div class="sec-eye">// 03 · Exclusivos</div><div class="sec-title">ITENS <span>ÚNICOS</span></div><div class="sec-bar"></div><div class="grid" id="g-itens"></div></div>
+<div class="section" id="s-divisoes"><div class="sec-eye">// 04 · Sub-grupos EB</div><div class="sec-title">DIVISÕES <span>ESPECIAIS</span></div><div class="sec-bar"></div><div class="grid" id="g-divisoes"></div></div>
+<div class="section" id="s-especiais"><div class="sec-eye">// 05 · Postos de Elite</div><div class="sec-title">POSTOS <span>ESPECIAIS</span></div><div class="sec-bar"></div><div class="grid" id="g-especiais"></div></div>
+<div class="section" id="s-bundles"><div class="sec-eye">// 05 · Economize mais</div><div class="sec-title">PACOTES COM <span>DESCONTO</span></div><div class="sec-bar"></div><div class="grid" id="g-bundles"></div></div>
+
+<footer>
+  <div class="fbrand">EB · Exército Brasileiro</div>
+  <ul class="flinks">
+    <li><a href="https://www.roblox.com/games/14511049/EB-Ex-rcito-Brasileiro" target="_blank">Jogar</a></li>
+    <li><a href="https://discord.gg/SEU-DISCORD" target="_blank">Discord</a></li>
+    <li><a href="#loja">Produtos</a></li>
+  </ul>
+  <div class="fcopy">Não afiliado à Roblox Corporation © 2025</div>
+</footer>
+
+<!-- MODAL 3 STEPS -->
+<div class="overlay" id="ov">
+  <div class="modal">
+    <button class="modal-x" onclick="closeM()">✕</button>
+    <div class="sbar">
+      <div class="seg on" id="sg0"></div>
+      <div class="seg" id="sg1"></div>
+      <div class="seg" id="sg2"></div>
+    </div>
+
+    <!-- STEP 0: TERMOS -->
+    <div class="panel on" id="p0">
+      <div class="p-eye">Passo 1 de 3 · Termos de Uso</div>
+      <div class="p-title" id="m-name">—</div>
+      <div class="p-sub" id="m-price">—</div>
+      <div class="terms-box">
+        <strong style="color:var(--go)">Termos de Uso — EB Loja Oficial</strong><br><br>
+        <strong>1. Reembolsos:</strong> Não realizamos reembolsos após a entrega automática do item adquirido.<br><br>
+        <strong>2. Chargebacks:</strong> Qualquer contestação indevida no cartão resultará em banimento permanente do servidor e grupo Roblox.<br><br>
+        <strong>3. Entrega:</strong> Patentes são entregues automaticamente via API Roblox. Gamepasses e itens podem levar até 5 minutos.<br><br>
+        <strong>4. Responsabilidade:</strong> Este site não é afiliado à Roblox Corporation. Os itens são benefícios dentro do servidor EB.<br><br>
+        <strong>5. Idade:</strong> Ao comprar, você confirma ter 13 anos ou mais, ou possuir consentimento dos responsáveis legais.<br><br>
+        <strong>6. Suporte:</strong> Em caso de problemas, acesse o Discord oficial do EB antes de qualquer disputa.
+      </div>
+      <label class="chk-row"><input type="checkbox" id="c0"><span class="chk-label">Li e aceito os <strong>Termos de Uso</strong> e a política de não-reembolso.</span></label>
+      <label class="chk-row"><input type="checkbox" id="c1"><span class="chk-label">Confirmo que li as <strong>regras do servidor</strong> EB Exército Brasileiro.</span></label>
+      <label class="chk-row"><input type="checkbox" id="c2"><span class="chk-label">Confirmo que tenho <strong>13 anos ou mais</strong> (ou autorização dos responsáveis).</span></label>
+      <button class="pbtn" onclick="goStep(1)">CONTINUAR →</button>
+    </div>
+
+    <!-- STEP 1: ROBLOX ID -->
+    <div class="panel" id="p1">
+      <div class="p-eye">Passo 2 de 3 · Verificação Roblox</div>
+      <div class="p-title">SEU PERFIL</div>
+      <div class="p-sub" style="font-size:.82rem;color:var(--mu)">Digite seu ID numérico do Roblox para confirmarmos sua conta.</div>
+      <div class="rid-wrap">
+        <input class="rid-input" type="number" id="rid" placeholder="Ex: 102815951" oninput="clrRox()">
+        <button class="rid-btn" onclick="searchRox()">🔍</button>
+      </div>
+      <div class="rid-err" id="rid-err"></div>
+      <div class="rox-card" id="rox-card">
+        <img class="rox-img" id="rox-img" src="" alt="Avatar">
+        <div>
+          <div class="rox-name" id="rox-name"></div>
+          <div class="rox-disp" id="rox-disp"></div>
+          <a class="rox-link" id="rox-link" href="#" target="_blank">Ver perfil no Roblox →</a>
+          <div class="rox-note">⚠️ Confirme que este é o seu perfil antes de continuar.</div>
+        </div>
+      </div>
+      <button class="pbtn" id="btn1" onclick="goStep(2)" disabled>CONFIRMAR E CONTINUAR →</button>
+      <button class="bbtn" onclick="goStep(0)">← Voltar</button>
+    </div>
+
+    <!-- STEP 2: EMAIL + CUPOM + PAGAR -->
+    <div class="panel" id="p2">
+      <div class="p-eye">Passo 3 de 3 · Pagamento</div>
+      <div class="p-title">FINALIZAR</div>
+      <div class="p-sub" id="m-summary" style="font-size:.8rem;color:var(--mu)"></div>
+      <div class="fg">
+        <label class="fl">E-mail para recibo *</label>
+        <input class="fi" type="email" id="em" placeholder="seu@email.com">
+      </div>
+      <div class="fg">
+        <label class="fl">Cupom de desconto (opcional)</label>
+        <div class="cup-row">
+          <input class="cup-in" type="text" id="cup" placeholder="BEMVINDO10">
+          <button class="cup-btn" onclick="applyCup()">APLICAR</button>
+        </div>
+        <div class="cup-res" id="cup-res"></div>
+      </div>
+      <div class="psum">
+        <div class="prow"><span>Subtotal</span><span id="ps-sub">—</span></div>
+        <div class="prow dis" id="ps-dr" style="display:none"><span>Desconto</span><span id="ps-disc">—</span></div>
+        <div class="prow tot"><span>Total</span><span id="ps-tot">—</span></div>
+      </div>
+      <button class="pbtn" id="paybtn" onclick="doPayment()">🔒 PAGAR COM STRIPE</button>
+      <button class="bbtn" onclick="goStep(1)">← Voltar</button>
+      <div class="mnote">Pagamento seguro via Stripe · Entrega automática após confirmação</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STRIPE_PK = 'pk_live_COLOQUE_SUA_CHAVE_PUBLICA_AQUI';
+const stripe = Stripe(STRIPE_PK);
+
+let items=[], cur=null, step=0, rox=null, coup=null, total=0;
+
+// Load items
+async function loadItems(){
+  try{
+    const r=await fetch('/api/items');
+    items=await r.json();
+    render();
+    fetch('/api/stats').then(r=>r.json()).then(d=>animN(document.getElementById('stat-n'),d.totalSales||0)).catch(()=>{});
+  }catch{toast('Erro ao carregar produtos.','err')}
+}
+
+const TAGS={patentes:'t-pat',gamepasses:'t-gp',itens:'t-it',divisoes:'t-div',especiais:'t-esp',bundles:'t-bun'};
+const LABELS={patentes:'Patente',gamepasses:'Gamepass',itens:'Item Único',divisoes:'Divisão',especiais:'Especial',bundles:'Pacote'};
+
+function cardHTML(i){
+  const isB=i.category==='bundles';
+  const old=i.old_price?`<span class="old-price">R$ ${i.old_price.toFixed(2).replace('.',',')}</span>`:'';
+  let extra='';
+  if(isB&&i.description){
+    const pts=i.description.split('+').map(p=>p.trim()).filter(Boolean);
+    extra=`<ul class="perks">${pts.map(p=>`<li>${p}</li>`).join('')}</ul>`;
+    if(i.old_price){const sv=Math.round((1-i.price/i.old_price)*100);extra+=`<div class="savings">Economize ${sv}%</div>`;}
+  }
+  return `<div class="card${i.featured?' feat':''}" onclick="openBuy('${i.id}')">
+    ${i.featured?'<div class="card-badge b-pop">⭐ Destaque</div>':''}
+    <span class="card-icon">${i.image||'🎖️'}</span>
+    <div class="cat-tag ${TAGS[i.category]||'t-pat'}">${LABELS[i.category]||''}</div>
+    <div class="card-name">${i.name}</div>
+    ${!isB?`<div class="card-desc">${i.description||''}</div>`:''}
+    ${extra}
+    <div class="price-row"><div class="price">R$ ${i.price.toFixed(2).replace('.',',')}</div>${old}</div>
+    <button class="buy-btn" onclick="event.stopPropagation();openBuy('${i.id}')">COMPRAR AGORA</button>
+  </div>`;
+}
+
+function render(){
+  ['all','patentes','gamepasses','itens','divisoes','especiais','bundles'].forEach(c=>{
+    const g=document.getElementById('g-'+c);
+    if(!g)return;
+    const list=c==='all'?items:items.filter(i=>i.category===c);
+    g.innerHTML=list.length?list.map(cardHTML).join(''):'<div style="padding:40px;color:var(--mu);font-size:.85rem">Nenhum item disponível.</div>';
+  });
+}
+
+function cat(c,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('vis'));
+  document.querySelectorAll('.cat-btn,.nav-tab').forEach(b=>b.classList.remove('on'));
+  const s=document.getElementById('s-'+c)||document.getElementById('s-all');
+  if(s){s.classList.add('vis');s.scrollIntoView({behavior:'smooth',block:'start'});}
+  if(btn)btn.classList.add('on');
+}
+
+// Open modal
+function openBuy(id){
+  cur=items.find(i=>i.id===id);if(!cur)return;
+  total=cur.price;coup=null;rox=null;
+  document.getElementById('m-name').textContent=cur.name.toUpperCase();
+  document.getElementById('m-price').textContent='R$ '+cur.price.toFixed(2).replace('.',',');
+  ['c0','c1','c2'].forEach(x=>document.getElementById(x).checked=false);
+  document.getElementById('rid').value='';
+  document.getElementById('em').value='';
+  document.getElementById('cup').value='';
+  document.getElementById('cup-res').className='cup-res';
+  document.getElementById('rox-card').classList.remove('on');
+  document.getElementById('rid-err').classList.remove('on');
+  document.getElementById('btn1').disabled=true;
+  updSum();goStep(0);
+  document.getElementById('ov').classList.add('open');
+}
+function closeM(){document.getElementById('ov').classList.remove('open')}
+document.getElementById('ov').addEventListener('click',e=>{if(e.target===document.getElementById('ov'))closeM()});
+
+function goStep(n){
+  if(n===1){
+    if(!['c0','c1','c2'].every(x=>document.getElementById(x).checked)){toast('Marque todas as caixas para continuar.','err');return;}
+  }
+  if(n===2){if(!rox){toast('Confirme seu perfil Roblox primeiro.','err');return;}}
+  step=n;
+  ['p0','p1','p2'].forEach((id,i)=>document.getElementById(id).classList.toggle('on',i===n));
+  ['sg0','sg1','sg2'].forEach((id,i)=>{
+    const e=document.getElementById(id);
+    e.classList.toggle('done',i<n);e.classList.toggle('on',i===n);
+  });
+  if(n===2){
+    document.getElementById('m-summary').textContent=`Comprando: ${cur.name} · Para: @${rox.name}`;
+    updSum();
+  }
+}
+
+// Roblox
+function clrRox(){rox=null;document.getElementById('rox-card').classList.remove('on');document.getElementById('rid-err').classList.remove('on');document.getElementById('btn1').disabled=true;}
+async function searchRox(){
+  const id=document.getElementById('rid').value.trim();
+  if(!id||isNaN(id)){errRox('Digite um ID numérico válido.');return;}
+  const btn=document.querySelector('.rid-btn');
+  btn.textContent='⏳';btn.disabled=true;
+  document.getElementById('rid-err').classList.remove('on');
+  document.getElementById('rox-card').classList.remove('on');
+  try{
+    const r=await fetch(`/api/roblox/${id}`);
+    const d=await r.json();
+    if(!r.ok){errRox(d.error||'Usuário não encontrado.');return;}
+    rox=d;
+    document.getElementById('rox-name').textContent=d.name;
+    document.getElementById('rox-disp').textContent=d.displayName!==d.name?`(${d.displayName})`:'';
+    const lk=document.getElementById('rox-link');lk.href=d.profileUrl;lk.textContent=`roblox.com/users/${d.id}/profile →`;
+    const img=document.getElementById('rox-img');
+    if(d.avatar){img.src=d.avatar;img.style.display='block';}else{img.style.display='none';}
+    document.getElementById('rox-card').classList.add('on');
+    document.getElementById('btn1').disabled=false;
+  }catch{errRox('Erro ao buscar. Tente novamente.');}
+  finally{btn.textContent='🔍';btn.disabled=false;}
+}
+document.getElementById('rid').addEventListener('keydown',e=>{if(e.key==='Enter')searchRox()});
+function errRox(m){const e=document.getElementById('rid-err');e.textContent='❌ '+m;e.classList.add('on');document.getElementById('rox-card').classList.remove('on');document.getElementById('btn1').disabled=true;}
+
+// Coupon
+async function applyCup(){
+  const code=document.getElementById('cup').value.trim().toUpperCase();
+  if(!code)return;
+  const el=document.getElementById('cup-res');
+  try{
+    const r=await fetch('/api/coupon',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,price:cur.price})});
+    const d=await r.json();
+    if(!r.ok){el.className='cup-res err';el.textContent='❌ '+d.error;coup=null;total=cur.price;}
+    else{
+      const dt=d.type==='percent'?`${d.value}% off`:`R$ ${d.value.toFixed(2).replace('.',',')} off`;
+      el.className='cup-res ok';el.textContent=`✅ Cupom aplicado! ${dt} — Economia de R$ ${d.discount.toFixed(2).replace('.',',')}`;
+      coup=code;total=d.finalPrice;
+    }
+    updSum();
+  }catch{el.className='cup-res err';el.textContent='❌ Erro ao validar.';}
+}
+
+function updSum(){
+  if(!cur)return;
+  const disc=cur.price-total;
+  document.getElementById('ps-sub').textContent='R$ '+cur.price.toFixed(2).replace('.',',');
+  document.getElementById('ps-tot').textContent='R$ '+total.toFixed(2).replace('.',',');
+  const dr=document.getElementById('ps-dr');
+  if(disc>0.01){dr.style.display='flex';document.getElementById('ps-disc').textContent='−R$ '+disc.toFixed(2).replace('.',',');}
+  else dr.style.display='none';
+}
+
+// Payment
+async function doPayment(){
+  const email=document.getElementById('em').value.trim();
+  if(!email||!email.includes('@')){toast('Digite um e-mail válido.','err');return;}
+  if(!rox){toast('Perfil Roblox não confirmado.','err');return;}
+  const btn=document.getElementById('paybtn');
+  btn.disabled=true;btn.innerHTML='<span class="sp"></span>PROCESSANDO...';
+  try{
+    const r=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({itemId:cur.id,robloxId:String(rox.id),robloxNick:rox.name,email,couponCode:coup||''})});
+    const d=await r.json();
+    if(!r.ok||!d.sessionId)throw new Error(d.error||'Erro ao criar sessão.');
+    await stripe.redirectToCheckout({sessionId:d.sessionId});
+  }catch(e){toast('Erro: '+e.message,'err');btn.disabled=false;btn.innerHTML='🔒 PAGAR COM STRIPE';}
+}
+
+// URL return
+const P=new URLSearchParams(location.search);
+if(P.get('success')==='true'){setTimeout(()=>toast('✅ Pagamento confirmado! Entrega em andamento.','ok'),600);history.replaceState({},'',location.pathname);}
+if(P.get('canceled')==='true'){setTimeout(()=>toast('Pagamento cancelado.','err'),400);history.replaceState({},'',location.pathname);}
+
+function animN(el,t){let c=0;const s=Math.max(1,Math.ceil(t/50));const x=setInterval(()=>{c=Math.min(c+s,t);el.textContent=c.toLocaleString('pt-BR');if(c>=t)clearInterval(x);},30);}
+function toast(m,t=''){const e=document.getElementById('toast');e.textContent=m;e.className=`toast ${t} show`;clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),4500);}
+
+loadItems();
+</script>
+</body>
+</html>
